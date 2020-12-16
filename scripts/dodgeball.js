@@ -1,11 +1,24 @@
-MyApp = {
+DodgeballApp = {
+    container: document.getElementById("court"),
+    simulation: undefined,
 
     init: function () {
-        console.log("javascript is linked correctly")
-        let y = 5
-        let x = 2
+       
+    },
+    createPlayer: function() {
+    let playerdiv = document.createElement("div")
+    playerdiv.className = "player"
+    this.container.append(playerdiv)
+    let Player = {
+        haveBall = false,
+        lives: 3,
+        width: 40,
+        height: 40,
+        element: playerdiv,
+        
     }
+    },
 
 }
 
-MyApp.init();
+DodgeballApp.init();
