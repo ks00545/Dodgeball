@@ -4,9 +4,17 @@ DodgeballApp = {
 
     init: function () {
        
+        for (let i = 0; i < 4; i++) {
+            this.people.push(this.createBall());
+        }
+        this.createPlayer();
+        this.createBalls();
+        this.renderGame();
+        this.startGame();
         window.onkeydown = function(event){
             DodgeballApp.keyPress(event);
         }
+
 
     },
     createPlayer: function() {
@@ -64,6 +72,18 @@ DodgeballApp = {
 
     checkForHit: function() {
 
+    },
+
+    startGame: function() {
+        this.simulation = window.setInterval(this.playGame.bind(DodgeballApp), 30);
+    },
+
+    playGame: function() {
+
+    }
+
+    renderGame: function() {
+        
     },
 }
 
