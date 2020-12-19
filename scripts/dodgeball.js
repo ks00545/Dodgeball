@@ -79,8 +79,11 @@ DodgeballApp = {
     },
 
     playGame: function() {
-
-    }
+        moveBall();
+        bounceBall();
+        checkForHit();
+        renderGame();
+    },
 
     renderGame: function() {
         
