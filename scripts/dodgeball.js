@@ -2,46 +2,49 @@ DodgeballApp = {
     container: document.getElementById("court"),
     simulation: undefined,
     balls: [],
+    player1: undefined,
+    player2: undefined,
 
     init: function () {
-       
 
-        this.createPlayer();
+
+        this.createPlayers();
         this.createBalls();
         this.renderGame();
         this.startGame();
-        
-        window.onkeydown = function(event){
+
+        window.onkeydown = function (event) {
             DodgeballApp.keyPress(event);
         }
 
 
     },
-    createPlayer: function() {
-    let player1div = document.createElement("div")
-    player1div.className = "player1"
-    this.container.append(player1div)
-    let Player1 = {
-        haveBall: false,
-        lives: 3,
-        width: 40,
-        height: 40,
-        element: player1div,
-        x_pos: 40,
-        y_pos: 250
+    createPlayers: function () {
+        let player1div = document.createElement("div")
+        player1div.className = "player1"
+        this.container.append(player1div)
+        player1 = {
+            haveBall: false,
+            lives: 3,
+            width: 40,
+            height: 40,
+            element: player1div,
+            x_pos: 40,
+            y_pos: 250
         }
-    let player2div = document.createElement("div")
-    player2div.className = "player2"
-    this.container.append(player2div)
-    let Player2 = {
-        haveBall: false,
-        lives: 3,
-        width: 40,
-        height: 40,
-        element: player2div,
-        x_pos: 960,
-        y_pos: 250
+        let player2div = document.createElement("div")
+        player2div.className = "player2"
+        this.container.append(player2div)
+        player2 = {
+            haveBall: false,
+            lives: 3,
+            width: 40,
+            height: 40,
+            element: player2div,
+            x_pos: 960,
+            y_pos: 250
         }
+
 
     },
 
@@ -82,23 +85,23 @@ DodgeballApp = {
     },
 
 
-    checkForHit: function() {
+    checkForHit: function () {
 
     },
 
-    startGame: function() {
+    startGame: function () {
         this.simulation = window.setInterval(this.playGame.bind(DodgeballApp), 30);
     },
 
-    playGame: function() {
+    playGame: function () {
         moveBall();
         bounceBall();
         checkForHit();
         renderGame();
     },
 
-    renderGame: function() {
-        
+    renderGame: function () {
+
     },
 }
 
