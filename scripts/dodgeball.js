@@ -22,7 +22,7 @@ DodgeballApp = {
     player1div.className = "player1"
     this.container.append(player1div)
     let Player1 = {
-        haveBall = false,
+        haveBall: false,
         lives: 3,
         width: 40,
         height: 40,
@@ -34,7 +34,7 @@ DodgeballApp = {
     player2div.className = "player2"
     this.container.append(player2div)
     let Player2 = {
-        haveBall = false,
+        haveBall: false,
         lives: 3,
         width: 40,
         height: 40,
@@ -63,10 +63,10 @@ DodgeballApp = {
 
     createBall: function() {
     let Ball = {
-        radius = 15,
+        radius: 15,
         color: white,
-        x_velocity = 0,
-        y_velocity = 0
+        x_velocity: 0,
+        y_velocity: 0
         }
     },
 
