@@ -13,7 +13,7 @@ DodgeballApp = {
         this.renderGame();
         this.startGame();
 
-        window.onkeydown = function (event) {
+        window.onkeypress = function (event) {
             DodgeballApp.keyPress(event);
         }
 
@@ -30,7 +30,7 @@ DodgeballApp = {
             height: 40,
             element: player1div,
             x_pos: 40,
-            y_pos: 250
+            y_pos: 250,
         }
         let player2div = document.createElement("div")
         player2div.className = "player2"
@@ -42,7 +42,7 @@ DodgeballApp = {
             height: 40,
             element: player2div,
             x_pos: 960,
-            y_pos: 250
+            y_pos: 250,
         }
 
 
@@ -61,11 +61,31 @@ DodgeballApp = {
         let ball = {
             element: balldiv,
             radius: 15,
-            color: "white",
+            color: "black",
             x_velocity: 0,
             y_velocity: 0
         }
         return ball;
+    },
+
+
+    keyPress: function (event) {
+        switch (event.keyCode) {
+            case 87:    // W
+                console.log("W pressed");
+                break;
+            case 65:    // A
+                console.log("A pressed");
+                break;
+            case 83:    // S
+                console.log("S pressed");
+                break;
+            case 68:    // D
+                console.log("D pressed");
+                break;
+            default:
+                console.log("Not a valid key");
+        }
     },
 
     movePlayers: function (event) {
@@ -84,6 +104,13 @@ DodgeballApp = {
           }*/
     },
 
+    moveBall: function() {
+        
+    },
+
+    bounceBall: function() {
+        
+    },
 
     checkForHit: function () {
 
@@ -94,11 +121,13 @@ DodgeballApp = {
     },
 
     playGame: function () {
-        moveBall();
-        bounceBall();
-        checkForHit();
-        renderGame();
+        this.moveBall();
+        this.bounceBall();
+        this.checkForHit();
+        this.renderGame();
     },
+
+    
 
     renderGame: function () {
 
