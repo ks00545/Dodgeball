@@ -1,16 +1,16 @@
 DodgeballApp = {
     container: document.getElementById("court"),
     simulation: undefined,
+    balls: [],
 
     init: function () {
        
-        for (let i = 0; i < 4; i++) {
-            this.people.push(this.createBall());
-        }
+
         this.createPlayer();
         this.createBalls();
         this.renderGame();
         this.startGame();
+        
         window.onkeydown = function(event){
             DodgeballApp.keyPress(event);
         }
@@ -45,12 +45,32 @@ DodgeballApp = {
 
     },
 
-    movePlayers: function(event) {
-        if(event.keyCode == 87){
+    createBalls: function () {
+        for (let i = 0; i < 4; i++) {
+            this.balls.push(this.createBall());
+        }
+    },
+
+    createBall: function () {
+        let balldiv = document.createElement("div")
+        balldiv.className = "ball"
+        this.container.append(balldiv)
+        let ball = {
+            element: balldiv,
+            radius: 15,
+            color: "white",
+            x_velocity: 0,
+            y_velocity: 0
+        }
+        return ball;
+    },
+
+    movePlayers: function (event) {
+        /*if (event.keyCode == 87) {
             DodgeballApp.Player1.x_pos = DodgeballApp.Player1.x_pos + 1;
             console.log("ok");
-            }
-          /*else if(event.keyCode == 65){
+        }
+          else if(event.keyCode == 65){
             SketchApp.color = 'red';
           }
           else if(event.keyCode == 83){
@@ -61,14 +81,6 @@ DodgeballApp = {
           }*/
     },
 
-    createBall: function() {
-    let Ball = {
-        radius: 15,
-        color: white,
-        x_velocity: 0,
-        y_velocity: 0
-        }
-    },
 
     checkForHit: function() {
 
