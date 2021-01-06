@@ -21,9 +21,10 @@ DodgeballApp = {
     },
     createPlayers: function () {
         let player1div = document.createElement("div")
-        player1div.className = "player1"
+        player1div.className = "player"
         this.container.append(player1div)
         player1 = {
+            color: "blue",
             haveBall: false,
             lives: 3,
             width: 40,
@@ -33,15 +34,16 @@ DodgeballApp = {
             y_pos: 250,
         }
         let player2div = document.createElement("div")
-        player2div.className = "player2"
+        player2div.className = "player"
         this.container.append(player2div)
         player2 = {
+            color: "red",
             haveBall: false,
             lives: 3,
             width: 40,
             height: 40,
             element: player2div,
-            x_pos: 960,
+            x_pos: 920,
             y_pos: 250,
         }
 
@@ -130,7 +132,26 @@ DodgeballApp = {
     
 
     renderGame: function () {
+        this.renderPlayers();
+        this.renderBalls();   
+    },
 
+    renderPlayers: function() {
+        player1.element.style.top = player1.y_pos + "px";
+        player1.element.style.left = player1.x_pos + "px";
+        player1.element.style.backgroundColor = player1.color;
+
+        player2.element.style.top = player2.y_pos + "px";
+        player2.element.style.left = player2.x_pos + "px";
+        player2.element.style.backgroundColor = player2.color;
+    },
+
+    renderBalls: function() {
+        for(let i = 0; i < 4; i++) {
+            this.balls[i].element.style.top = this.balls[i].y_pos + "px";
+            this.balls[i].element.style.left = this.balls[i].x_pos + "px";
+            this.balls[i].element.style.backgroundColor = this.balls[i].color;
+        }
     },
 }
 
