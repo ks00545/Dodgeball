@@ -54,6 +54,10 @@ DodgeballApp = {
         for (let i = 0; i < 4; i++) {
             this.balls.push(this.createBall());
         }
+        this.balls[1].y_pos = 470;
+        this.balls[2].x_pos = 970;
+        this.balls[3].y_pos = 470;
+        this.balls[3].x_pos = 970;
     },
 
     createBall: function () {
@@ -65,7 +69,9 @@ DodgeballApp = {
             radius: 15,
             color: "black",
             x_velocity: 0,
-            y_velocity: 0
+            y_velocity: 0,
+            x_pos: 0,
+            y_pos: 0,
         }
         return ball;
     },
