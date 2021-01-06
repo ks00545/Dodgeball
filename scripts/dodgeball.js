@@ -190,10 +190,10 @@ DodgeballApp = {
     },
 
     bounceBall: function () {
-        for(i = 0; i < 4; i++) {
+        /*for(i = 0; i < 4; i++) {
             if (balls[i].x_pos < )
                 balls[i].x
-        }
+        }*/
     },
 
     checkForHit: function () {
