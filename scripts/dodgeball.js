@@ -4,17 +4,25 @@ DodgeballApp = {
     balls: [],
     player1: undefined,
     player2: undefined,
+    keyPressed: [],
 
     init: function () {
-
 
         this.createPlayers();
         this.createBalls();
         this.renderGame();
         this.startGame();
 
-        window.onkeypress = function (event) {
-            DodgeballApp.keyPress(event);
+        // initializes all the keys unpressed
+        for (let i = 0; i <= 87; i++) {
+            this.keyPressed[i] = false;
+        }
+
+        window.onkeydown = function (event) {
+            DodgeballApp.keyDown(event);
+        }
+        window.onkeyup = function (event) {
+            DodgeballApp.keyUp(event);
         }
 
 
@@ -77,23 +85,50 @@ DodgeballApp = {
     },
 
 
-    keyPress: function (event) {
+    keyDown: function (event) {
+        this.keyPressed[event.keyCode] = true;
+
+        // initial attempt to handle keys
         switch (event.keyCode) {
             case 87:    // W
-                console.log("W pressed");
+                console.log("W down");
                 break;
             case 65:    // A
-                console.log("A pressed");
+                console.log("A down");
                 break;
             case 83:    // S
-                console.log("S pressed");
+                console.log("S down");
                 break;
             case 68:    // D
-                console.log("D pressed");
+                console.log("D down");
                 break;
+            case 37:    // Left arrow
+                console.log("Left down");
+                break;
+            case 38:    // Up arrow
+                console.log("Up down");
+                break;
+            case 39:    // Right arrow
+                console.log("Right down");
+                break;
+            case 40:    // Down arrow
+                console.log("Down down");
+                break;
+            case 20:    // Caps Lock
+                console.log("Shift down");
+                break;
+            case 13:    // Enter
+                console.log("Enter down");
+                break;
+
+
             default:
                 console.log("Not a valid key");
         }
+    },
+
+    keyUp: function(event) {
+        this.keyPressed[event.keyCode] = false;
     },
 
     movePlayers: function (event) {
