@@ -26,7 +26,6 @@ DodgeballApp = {
             DodgeballApp.keyUp(event);
         }
 
-
     },
     createPlayers: function () {
         let player1div = document.createElement("div")
@@ -40,7 +39,7 @@ DodgeballApp = {
             height: 40,
             element: player1div,
             x_pos: 40,
-            y_pos: 250,
+            y_pos: 230,
         }
         let player2div = document.createElement("div")
         player2div.className = "player"
@@ -53,7 +52,7 @@ DodgeballApp = {
             height: 40,
             element: player2div,
             x_pos: 920,
-            y_pos: 250,
+            y_pos: 230,
         }
 
 
@@ -191,7 +190,10 @@ DodgeballApp = {
     },
 
     bounceBall: function () {
-
+        for(i = 0; i < 4; i++) {
+            if (balls[i].x_pos < )
+                balls[i].x
+        }
     },
 
     checkForHit: function () {
