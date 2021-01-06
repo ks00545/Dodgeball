@@ -5,6 +5,7 @@ DodgeballApp = {
     player1: undefined,
     player2: undefined,
     keyPressed: [],
+    playerSpeed: 5, //speed in pixels
 
     init: function () {
 
@@ -127,32 +128,70 @@ DodgeballApp = {
         }
     },
 
-    keyUp: function(event) {
+    keyUp: function (event) {
         this.keyPressed[event.keyCode] = false;
     },
 
     movePlayers: function (event) {
-        /*if (event.keyCode == 87) {
-            DodgeballApp.Player1.x_pos = DodgeballApp.Player1.x_pos + 1;
-            console.log("ok");
+        // Move Player 1
+        if (this.keyPressed[87] == true) {   // If W, go up
+            player1.y_pos = player1.y_pos - this.playerSpeed;
+            if (player1.y_pos < 0) {
+                player1.y_pos = 0;
+            }
         }
-          else if(event.keyCode == 65){
-            SketchApp.color = 'red';
-          }
-          else if(event.keyCode == 83){
-            SketchApp.color = 'green';
-          }
-          else if(event.keyCode == 68){
-            SketchApp.color = 'blue';
-          }*/
+        if (this.keyPressed[65] == true) {   // If A, go left
+            player1.x_pos = player1.x_pos - this.playerSpeed;
+            if (player1.x_pos < 0) {
+                player1.x_pos = 0;
+            }
+        }
+        if (this.keyPressed[83] == true) {   // If S, go down
+            player1.y_pos = player1.y_pos + this.playerSpeed;
+            if (player1.y_pos > 500 - player1.height) {
+                player1.y_pos = 500 - player1.height;
+            }
+        }
+        if (this.keyPressed[68] == true) {   // If D, go right
+            player1.x_pos = player1.x_pos + this.playerSpeed;
+            if (player1.x_pos > 500 - player1.width) {
+                player1.x_pos = 500 - player1.width;
+            }
+        }
+
+        //Move Player 2
+        if (this.keyPressed[38] == true) {   // If up arrow, go up
+            player2.y_pos = player2.y_pos - this.playerSpeed;
+            if (player2.y_pos < 0) {
+                player2.y_pos = 0;
+            }
+        }
+        if (this.keyPressed[37] == true) {   // If left arrow, go left
+            player2.x_pos = player2.x_pos - this.playerSpeed;
+            if (player2.x_pos < 500) {
+                player2.x_pos = 500;
+            }
+        }
+        if (this.keyPressed[40] == true) {   // If down arrow, go down
+            player2.y_pos = player2.y_pos + this.playerSpeed;
+            if (player2.y_pos > 500 - player2.height) {
+                player2.y_pos = 500 - player2.height;
+            }
+        }
+        if (this.keyPressed[39] == true) {   // If right arrow, go right
+            player2.x_pos = player2.x_pos + this.playerSpeed;
+            if (player2.x_pos > 1000 - player2.width) {
+                player2.x_pos = 1000 - player2.width;
+            }
+        }
     },
 
-    moveBall: function() {
-        
+    moveBall: function () {
+
     },
 
-    bounceBall: function() {
-        
+    bounceBall: function () {
+
     },
 
     checkForHit: function () {
@@ -164,20 +203,21 @@ DodgeballApp = {
     },
 
     playGame: function () {
+        this.movePlayers();
         this.moveBall();
         this.bounceBall();
         this.checkForHit();
         this.renderGame();
     },
 
-    
+
 
     renderGame: function () {
         this.renderPlayers();
-        this.renderBalls();   
+        this.renderBalls();
     },
 
-    renderPlayers: function() {
+    renderPlayers: function () {
         player1.element.style.top = player1.y_pos + "px";
         player1.element.style.left = player1.x_pos + "px";
         player1.element.style.backgroundColor = player1.color;
@@ -187,8 +227,8 @@ DodgeballApp = {
         player2.element.style.backgroundColor = player2.color;
     },
 
-    renderBalls: function() {
-        for(let i = 0; i < 4; i++) {
+    renderBalls: function () {
+        for (let i = 0; i < 4; i++) {
             this.balls[i].element.style.top = this.balls[i].y_pos + "px";
             this.balls[i].element.style.left = this.balls[i].x_pos + "px";
             this.balls[i].element.style.backgroundColor = this.balls[i].color;

@@ -15,18 +15,22 @@ body {
     justify-content: center;
     width: 1000px;
     height: 500px;
-    border: 1px solid #eee;
+    border: 0px solid #eee;
     border-radius: 10px;
     background-color: white;
     margin: auto;
     position: relative;
 }
 
+#scoreboard{
+   font-size: 50;
+}
+
 .player {
     height: 40px;
     width: 40px;
     background-color: blue;
-    border: 1px solid grey;
+    border: 0px solid grey;
     border-radius: 3px;
     position: absolute;
     top: 0px;
@@ -37,7 +41,7 @@ body {
     height: 30px;
     width: 30px;
     background-color: black;
-    border: 1px solid grey;
+    border: 0px solid grey;
     border-radius: 30px;
     position: absolute;
     top: 0px;
