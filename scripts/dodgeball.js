@@ -191,12 +191,12 @@ DodgeballApp = {
 
     bounceBall: function () {
         for (i = 0; i < 4; i++) {
-            if (balls[i].x_pos < 0 || balls[i].x_pos > 1000 - balls[i].radius) {
-                balls[i].x_velocity = 0;
-                balls[i].y_velocity = 0;
+            if (this.balls[i].x_pos < 0 || this.balls[i].x_pos > 1000 - this.balls[i].radius) {
+                this.balls[i].x_velocity = 0;
+                this.balls[i].y_velocity = 0;
             }
-            if (balls[i].y_pos < 0 || balls[i].y_pos > 500 - balls[i].radius) {
-                balls[i].y_velocity = balls[i].y_velocity * -1;
+            if (this.balls[i].y_pos < 0 || this.balls[i].y_pos > 500 - this.balls[i].radius) {
+                this.balls[i].y_velocity = this.balls[i].y_velocity * -1;
             }
         }
     },
