@@ -74,10 +74,10 @@ DodgeballApp = {
         this.container.append(balldiv)
         let ball = {
             element: balldiv,
-            radius: 15,
+            radius: 30,
             color: "black",
-            x_velocity: 0,
-            y_velocity: 0,
+            x_velocity: 5,
+            y_velocity: 5,
             x_pos: 0,
             y_pos: 0,
         }
@@ -190,9 +190,14 @@ DodgeballApp = {
     },
 
     bounceBall: function () {
-        for(i = 0; i < 4; i++) {
-            if (balls[i].x_pos < )
-                balls[i].x
+        for (i = 0; i < 4; i++) {
+            if (balls[i].x_pos < 0 || balls[i].x_pos > 1000 - balls[i].radius) {
+                balls[i].x_velocity = 0;
+                balls[i].y_velocity = 0;
+            }
+            if (balls[i].y_pos < 0 || balls[i].y_pos > 500 - balls[i].radius) {
+                balls[i].y_velocity = balls[i].y_velocity * -1;
+            }
         }
     },
 
