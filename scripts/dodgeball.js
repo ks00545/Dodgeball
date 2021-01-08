@@ -1,11 +1,12 @@
 DodgeballApp = {
     container: document.getElementById("court"),
-    simulation: undefined,
+    game: undefined, // game timer
+    speedUp: undefined, // for ball speed up timer
     balls: [],
     player1: undefined,
     player2: undefined,
     keyPressed: [],
-    playerSpeed: 5, //speed in pixels
+    playerSpeed: 5, // speed in pixels
     ballSpeed: 5,
 
     init: function () {
@@ -204,11 +205,11 @@ DodgeballApp = {
                 this.balls[i].x_pos = this.balls[i].x_pos + this.balls[i].x_velocity;
                 this.balls[i].y_pos = this.balls[i].y_pos + this.balls[i].y_velocity;
             }
-            if (this.balls[i].pickedUpBy == 1){
+            if (this.balls[i].pickedUpBy == 1) {
                 this.balls[i].x_pos = player1.x_pos;
                 this.balls[i].y_pos = player1.y_pos;
             }
-            if (this.balls[i].pickedUpBy == 2){
+            if (this.balls[i].pickedUpBy == 2) {
                 this.balls[i].x_pos = player2.x_pos;
                 this.balls[i].y_pos = player2.y_pos;
             }
@@ -233,7 +234,7 @@ DodgeballApp = {
                 this.balls[i].y_velocity = this.balls[i].y_velocity * -1;
                 this.balls[i].y_pos = 0;
             }
-            if(this.balls[i].y_pos > 500 - this.balls[i].radius) {
+            if (this.balls[i].y_pos > 500 - this.balls[i].radius) {
                 this.balls[i].y_velocity = this.balls[i].y_velocity * -1;
                 this.balls[i].y_pos = 500 - this.balls[i].radius;
             }
@@ -258,9 +259,9 @@ DodgeballApp = {
         }
     },
 
-    ballThrow1: function() {
-        for(i = 0; i < 4; i++) {
-            if(this.balls[i].pickedUpBy == 1){
+    ballThrow1: function () {
+        for (i = 0; i < 4; i++) {
+            if (this.balls[i].pickedUpBy == 1) {
                 this.balls[i].x_pos = this.balls[i].x_pos + player1.width;
                 this.balls[i].x_velocity = this.ballSpeed;
                 this.balls[i].y_velocity = (Math.random() - 0.5) * this.ballSpeed;
@@ -270,9 +271,9 @@ DodgeballApp = {
         }
     },
 
-    ballThrow2: function() {
-        for(i = 0; i < 4; i++) {
-            if(this.balls[i].pickedUpBy == 2){
+    ballThrow2: function () {
+        for (i = 0; i < 4; i++) {
+            if (this.balls[i].pickedUpBy == 2) {
                 this.balls[i].x_pos = this.balls[i].x_pos - player2.width;
                 this.balls[i].x_velocity = this.ballSpeed * -1;
                 this.balls[i].y_velocity = (Math.random() - 0.5) * this.ballSpeed;
@@ -282,9 +283,14 @@ DodgeballApp = {
         }
     },
 
+
+
     startGame: function () {
-        this.simulation = window.setInterval(this.playGame.bind(DodgeballApp), 30);
+        this.game = window.setInterval(this.playGame.bind(DodgeballApp), 30);
+        this.speedUp = window.setInterval(this.speedUpBalls.bind(DodgeballApp), 10000);
     },
+
+
 
     playGame: function () {
         this.movePlayers();
@@ -293,6 +299,10 @@ DodgeballApp = {
         this.checkForHit();
         this.checkForBallPickUp();
         this.renderGame();
+    },
+
+    speedUpBalls: function () {
+        this.ballSpeed = this.ballSpeed + 1;
     },
 
     renderGame: function () {
