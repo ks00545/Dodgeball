@@ -6,8 +6,12 @@ DodgeballApp = {
     player2: undefined,
     keyPressed: [],
     playerSpeed: 5, //speed in pixels
+    ballSpeed: 5,
 
     init: function () {
+
+        this.playerSpeed = 5;
+        this.ballSpeed = 5;
 
         this.createPlayers();
         this.createBalls();
@@ -83,8 +87,8 @@ DodgeballApp = {
             pickedUpBy: 0,
             radius: 30,
             color: "black",
-            x_velocity: 5,
-            y_velocity: 5,
+            x_velocity: this.ballSpeed,
+            y_velocity: this.ballSpeed,
             x_pos: 0,
             y_pos: 0,
         }
@@ -122,10 +126,12 @@ DodgeballApp = {
                 console.log("Down down");
                 break;
             case 20:    // Caps Lock
-                console.log("Shift down");
+                console.log("Caps Lock down");
+                this.ballThrow1();
                 break;
             case 13:    // Enter
                 console.log("Enter down");
+                this.ballThrow2();
                 break;
 
 
@@ -211,12 +217,25 @@ DodgeballApp = {
 
     bounceBall: function () {
         for (i = 0; i < 4; i++) {
-            if (this.balls[i].x_pos < 0 || this.balls[i].x_pos > 1000 - this.balls[i].radius) {
+            if (this.balls[i].x_pos < 0) {
                 this.balls[i].x_velocity = 0;
                 this.balls[i].y_velocity = 0;
+                this.balls[i].x_pos = 0;
+                this.balls[i].moving = false;
             }
-            if (this.balls[i].y_pos < 0 || this.balls[i].y_pos > 500 - this.balls[i].radius) {
+            if (this.balls[i].x_pos > 1000 - this.balls[i].radius) {
+                this.balls[i].x_velocity = 0;
+                this.balls[i].y_velocity = 0;
+                this.balls[i].x_pos = 1000 - this.balls[i].radius;
+                this.balls[i].moving = false;
+            }
+            if (this.balls[i].y_pos < 0) {
                 this.balls[i].y_velocity = this.balls[i].y_velocity * -1;
+                this.balls[i].y_pos = 0;
+            }
+            if(this.balls[i].y_pos > 500 - this.balls[i].radius) {
+                this.balls[i].y_velocity = this.balls[i].y_velocity * -1;
+                this.balls[i].y_pos = 500 - this.balls[i].radius;
             }
         }
     },
@@ -235,6 +254,30 @@ DodgeballApp = {
                     && Math.abs(player2.y_pos - this.balls[i].y_pos) <= 10 + player2.height - this.balls[i].radius) {
                     this.balls[i].pickedUpBy = 2;
                 }
+            }
+        }
+    },
+
+    ballThrow1: function() {
+        for(i = 0; i < 4; i++) {
+            if(this.balls[i].pickedUpBy == 1){
+                this.balls[i].x_pos = this.balls[i].x_pos + player1.width;
+                this.balls[i].x_velocity = this.ballSpeed;
+                this.balls[i].y_velocity = (Math.random() - 0.5) * this.ballSpeed;
+                this.balls[i].moving = true;
+                this.balls[i].pickedUpBy = 0;
+            }
+        }
+    },
+
+    ballThrow2: function() {
+        for(i = 0; i < 4; i++) {
+            if(this.balls[i].pickedUpBy == 2){
+                this.balls[i].x_pos = this.balls[i].x_pos - player2.width;
+                this.balls[i].x_velocity = this.ballSpeed * -1;
+                this.balls[i].y_velocity = (Math.random() - 0.5) * this.ballSpeed;
+                this.balls[i].moving = true;
+                this.balls[i].pickedUpBy = 0;
             }
         }
     },
