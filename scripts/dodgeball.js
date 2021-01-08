@@ -79,6 +79,8 @@ DodgeballApp = {
         this.container.append(balldiv)
         let ball = {
             element: balldiv,
+            moving: false,
+            pickedUpBy: 0,
             radius: 30,
             color: "black",
             x_velocity: 5,
@@ -192,8 +194,18 @@ DodgeballApp = {
 
     moveBall: function () {
         for (i = 0; i < 4; i++) {
-            this.balls[i].x_pos = this.balls[i].x_pos + this.balls[i].x_velocity;
-            this.balls[i].y_pos = this.balls[i].y_pos + this.balls[i].y_velocity;
+            if (this.balls[i].moving == true) {
+                this.balls[i].x_pos = this.balls[i].x_pos + this.balls[i].x_velocity;
+                this.balls[i].y_pos = this.balls[i].y_pos + this.balls[i].y_velocity;
+            }
+            if (this.balls[i].pickedUpBy == 1){
+                this.balls[i].x_pos = player1.x_pos;
+                this.balls[i].y_pos = player1.y_pos;
+            }
+            if (this.balls[i].pickedUpBy == 2){
+                this.balls[i].x_pos = player2.x_pos;
+                this.balls[i].y_pos = player2.y_pos;
+            }
         }
     },
 
@@ -213,6 +225,20 @@ DodgeballApp = {
 
     },
 
+    checkForBallPickUp: function () {
+        for (i = 0; i < 4; i++) {
+            if (this.balls[i].moving == false && this.balls[i].pickedUpBy == 0) {
+                if (Math.abs(player1.x_pos - this.balls[i].x_pos) <= 10 && Math.abs(player1.y_pos - this.balls[i].y_pos) <= 10) {
+                    this.balls[i].pickedUpBy = 1;
+                }
+                if (Math.abs(player2.x_pos - this.balls[i].x_pos) <= 10 + player2.height - this.balls[i].radius
+                    && Math.abs(player2.y_pos - this.balls[i].y_pos) <= 10 + player2.height - this.balls[i].radius) {
+                    this.balls[i].pickedUpBy = 2;
+                }
+            }
+        }
+    },
+
     startGame: function () {
         this.simulation = window.setInterval(this.playGame.bind(DodgeballApp), 30);
     },
@@ -222,10 +248,9 @@ DodgeballApp = {
         this.moveBall();
         this.bounceBall();
         this.checkForHit();
+        this.checkForBallPickUp();
         this.renderGame();
     },
-
-
 
     renderGame: function () {
         this.renderPlayers();
