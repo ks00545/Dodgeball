@@ -63,9 +63,14 @@ DodgeballApp = {
             this.balls.push(this.createBall());
         }
         this.balls[1].y_pos = 470;
+
+        //right side balls
         this.balls[2].x_pos = 970;
         this.balls[3].y_pos = 470;
         this.balls[3].x_pos = 970;
+
+        this.balls[2].x_velocity = this.balls[2].x_velocity * -1;
+        this.balls[3].x_velocity = this.balls[3].x_velocity * -1;
     },
 
     createBall: function () {
@@ -186,7 +191,10 @@ DodgeballApp = {
     },
 
     moveBall: function () {
-
+        for (i = 0; i < 4; i++) {
+            this.balls[i].x_pos = this.balls[i].x_pos + this.balls[i].x_velocity;
+            this.balls[i].y_pos = this.balls[i].y_pos + this.balls[i].y_velocity;
+        }
     },
 
     bounceBall: function () {
