@@ -8,6 +8,8 @@ DodgeballApp = {
     keyPressed: [],
     playerSpeed: 5, // speed in pixels
     ballSpeed: 5,
+    bounceSound: undefined,
+    hitSound: undefined,
 
     init: function () {
 
@@ -16,6 +18,7 @@ DodgeballApp = {
 
         this.createPlayers();
         this.createBalls();
+        this.createSounds();
         this.renderGame();
         this.startGame();
 
@@ -96,6 +99,10 @@ DodgeballApp = {
         return ball;
     },
 
+    createSounds: function() {
+        bounceSound = new Audio('audio/ballBounceSound.mp3');
+        hitSound = new Audio('audio/hitSound.mp3');
+    },
 
     keyDown: function (event) {
         this.keyPressed[event.keyCode] = true;
@@ -233,10 +240,12 @@ DodgeballApp = {
             if (this.balls[i].y_pos < 0) {
                 this.balls[i].y_velocity = this.balls[i].y_velocity * -1;
                 this.balls[i].y_pos = 0;
+                bounceSound.play();
             }
             if (this.balls[i].y_pos > 500 - this.balls[i].radius) {
                 this.balls[i].y_velocity = this.balls[i].y_velocity * -1;
                 this.balls[i].y_pos = 500 - this.balls[i].radius;
+                bounceSound.play();
             }
         }
     },
@@ -254,6 +263,7 @@ DodgeballApp = {
                 distanceSquaredFromP2 = Math.pow(Player2CenterX - ballCenterX, 2) + Math.pow(Player2CenterY - ballCenterY, 2);
                 if (distanceSquaredFromP1 < Math.pow(35, 2)) {
                     console.log("Player 1 Hit!");
+                    hitSound.play();
                     window.clearInterval(this.game);
                     window.clearInterval(this.speedUp);
                     let winText = document.getElementById("Winner")
@@ -261,6 +271,7 @@ DodgeballApp = {
                     winText.style.color = "red";
                 }
                 if (distanceSquaredFromP2 < Math.pow(35, 2)) {
+                    hitSound.play();
                     console.log("Player 2 Hit!");
                     window.clearInterval(this.game);
                     window.clearInterval(this.speedUp);
@@ -330,7 +341,9 @@ DodgeballApp = {
     },
 
     speedUpBalls: function () {
-        this.ballSpeed = this.ballSpeed + 1;
+        if(this.ballSpeed < 20){
+            this.ballSpeed = this.ballSpeed + 1;
+        }
     },
 
     renderGame: function () {
