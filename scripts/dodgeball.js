@@ -10,11 +10,16 @@ DodgeballApp = {
     ballSpeed: 5,
     bounceSound: undefined,
     hitSound: undefined,
+    redPoints: 0,
+    bluePoints: 0,
 
     init: function () {
 
         this.playerSpeed = 5;
         this.ballSpeed = 5;
+        this.redPoints = 0;
+        this.bluePoints = 0;
+
 
         this.createPlayers();
         this.createBalls();
@@ -99,7 +104,7 @@ DodgeballApp = {
         return ball;
     },
 
-    createSounds: function() {
+    createSounds: function () {
         bounceSound = new Audio('audio/ballBounceSound.mp3');
         hitSound = new Audio('audio/hitSound.mp3');
     },
@@ -141,8 +146,10 @@ DodgeballApp = {
                 console.log("Enter down");
                 this.ballThrow2();
                 break;
-
-
+            case 32: //Space
+                console.log("Space Down");
+                this.resetRound();
+                break;
             default:
                 console.log("Not a valid key");
         }
@@ -269,6 +276,9 @@ DodgeballApp = {
                     let winText = document.getElementById("Winner")
                     winText.textContent = "Red Wins!"
                     winText.style.color = "red";
+                    this.redPoints = this.redPoints + 1;
+                    let redPointsText = document.getElementById("redPoints");
+                    redPointsText.textContent = "Red: " + this.redPoints;
                 }
                 if (distanceSquaredFromP2 < Math.pow(35, 2)) {
                     hitSound.play();
@@ -278,6 +288,9 @@ DodgeballApp = {
                     let winText = document.getElementById("Winner")
                     winText.textContent = "Blue Wins!"
                     winText.style.color = "blue";
+                    this.bluePoints = this.bluePoints + 1;
+                    let bluePointsText = document.getElementById("bluePoints");
+                    bluePointsText.textContent = "Blue: " + this.bluePoints;
                 }
             }
         }
@@ -322,7 +335,9 @@ DodgeballApp = {
         }
     },
 
-
+    resetRound: function () {
+        
+    }
 
     startGame: function () {
         this.game = window.setInterval(this.playGame.bind(DodgeballApp), 30);
@@ -341,7 +356,7 @@ DodgeballApp = {
     },
 
     speedUpBalls: function () {
-        if(this.ballSpeed < 20){
+        if (this.ballSpeed < 20) {
             this.ballSpeed = this.ballSpeed + 1;
         }
     },
