@@ -5,8 +5,7 @@ html {
 
 body { 
     font-family: sans-serif;
-    background-color: #11F;
-    color: #A11; 
+    background-color: rgb(58, 160, 228);
 }
 
 #court {
@@ -23,8 +22,35 @@ body {
 }
 
 #scoreboard{
-   font-size: 50;
+   font-size: 30;
+   text-align: center;
 }
+
+#scoreText{
+    margin-bottom: 0px;
+}
+
+#pointsList{
+    display:flex;
+    flex-flow:row nowrap;
+    list-style-type:none;
+    justify-content:space-around;
+    font-size:35px;
+    padding:0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 200px;
+    margin-right:200px
+}
+
+#bluePoints{
+    color: blue;
+}
+
+#redPoints{
+    color: red;
+}
+
 
 .player {
     height: 40px;
@@ -52,4 +78,9 @@ body {
     font-size: 100;
     text-align: center;
     color: Black;
+}
+
+#directions{
+    text-align: center;
+    position: relative;
 }

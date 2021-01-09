@@ -267,7 +267,7 @@ DodgeballApp = {
                     window.clearInterval(this.game);
                     window.clearInterval(this.speedUp);
                     let winText = document.getElementById("Winner")
-                    winText.textContent = "Player 2 Wins!"
+                    winText.textContent = "Red Wins!"
                     winText.style.color = "red";
                 }
                 if (distanceSquaredFromP2 < Math.pow(35, 2)) {
@@ -276,7 +276,7 @@ DodgeballApp = {
                     window.clearInterval(this.game);
                     window.clearInterval(this.speedUp);
                     let winText = document.getElementById("Winner")
-                    winText.textContent = "Player 1 Wins!"
+                    winText.textContent = "Blue Wins!"
                     winText.style.color = "blue";
                 }
             }
