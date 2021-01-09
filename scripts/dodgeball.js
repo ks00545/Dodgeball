@@ -242,6 +242,34 @@ DodgeballApp = {
     },
 
     checkForHit: function () {
+        for (i = 0; i < 4; i++) {
+            if (this.balls[i].moving == true) {
+                ballCenterX = this.balls[i].x_pos + 15;
+                ballCenterY = this.balls[i].y_pos + 15;
+                Player1CenterX = player1.x_pos + 20;
+                Player1CenterY = player1.y_pos + 20;
+                Player2CenterX = player2.x_pos + 20;
+                Player2CenterY = player2.y_pos + 20;
+                distanceSquaredFromP1 = Math.pow(Player1CenterX - ballCenterX, 2) + Math.pow(Player1CenterY - ballCenterY, 2);
+                distanceSquaredFromP2 = Math.pow(Player2CenterX - ballCenterX, 2) + Math.pow(Player2CenterY - ballCenterY, 2);
+                if (distanceSquaredFromP1 < Math.pow(35, 2)) {
+                    console.log("Player 1 Hit!");
+                    window.clearInterval(this.game);
+                    window.clearInterval(this.speedUp);
+                    let winText = document.getElementById("Winner")
+                    winText.textContent = "Player 2 Wins!"
+                    winText.style.color = "red";
+                }
+                if (distanceSquaredFromP2 < Math.pow(35, 2)) {
+                    console.log("Player 2 Hit!");
+                    window.clearInterval(this.game);
+                    window.clearInterval(this.speedUp);
+                    let winText = document.getElementById("Winner")
+                    winText.textContent = "Player 1 Wins!"
+                    winText.style.color = "blue";
+                }
+            }
+        }
 
     },
 
@@ -296,9 +324,9 @@ DodgeballApp = {
         this.movePlayers();
         this.moveBall();
         this.bounceBall();
+        this.renderGame();
         this.checkForHit();
         this.checkForBallPickUp();
-        this.renderGame();
     },
 
     speedUpBalls: function () {
