@@ -272,6 +272,8 @@ DodgeballApp = {
     },
 
     checkForHit: function () {
+        let redWasHit = false;
+        let blueWasHit = false;
         for (i = 0; i < 4; i++) {
             if (this.balls[i].moving == true) {
                 ballCenterX = this.balls[i].x_pos + this.balls[i].width / 2;
@@ -285,32 +287,44 @@ DodgeballApp = {
                 if (distanceSquaredFromP1 < Math.pow(this.balls[i].width / 2 + player1.width / 2, 2)) {
                     console.log("Player 1 Hit!");
                     hitSound.play();
-                    window.clearInterval(this.game);
-                    window.clearInterval(this.speedUp);
-                    let winText = document.getElementById("Winner")
-                    winText.textContent = "Red Wins!"
-                    winText.style.color = "red";
-                    this.redPoints = this.redPoints + 1;
-                    let redPointsText = document.getElementById("redPoints");
-                    redPointsText.textContent = "Red: " + this.redPoints;
-                    roundInProgress = false;
+                    blueWasHit = true;
+                    
                 }
                 if (distanceSquaredFromP2 < Math.pow(this.balls[i].width / 2 + player2.width / 2, 2)) {
-                    hitSound.play();
                     console.log("Player 2 Hit!");
-                    window.clearInterval(this.game);
-                    window.clearInterval(this.speedUp);
-                    let winText = document.getElementById("Winner")
-                    winText.textContent = "Blue Wins!"
-                    winText.style.color = "blue";
-                    this.bluePoints = this.bluePoints + 1;
-                    let bluePointsText = document.getElementById("bluePoints");
-                    bluePointsText.textContent = "Blue: " + this.bluePoints;
-                    roundInProgress = false;
+                    hitSound.play();
+                    redWasHit = true;
+                    
                 }
             }
         }
-
+        if (redWasHit == true && blueWasHit == true) {
+            let winText = document.getElementById("Winner")
+            winText.textContent = "Tie!"
+            winText.style.color = "black";
+        }
+        else if(redWasHit == true){
+            let winText = document.getElementById("Winner")
+            winText.textContent = "Blue Wins!"
+            winText.style.color = "blue";
+            this.bluePoints = this.bluePoints + 1;
+            let bluePointsText = document.getElementById("bluePoints");
+            bluePointsText.textContent = "Blue: " + this.bluePoints;
+            
+        }
+        else if(blueWasHit == true){
+            let winText = document.getElementById("Winner")
+            winText.textContent = "Red Wins!"
+            winText.style.color = "red";
+            this.redPoints = this.redPoints + 1;
+            let redPointsText = document.getElementById("redPoints");
+            redPointsText.textContent = "Red: " + this.redPoints;
+        }
+        if (redWasHit == true || blueWasHit == true) {
+            window.clearInterval(this.game);
+            window.clearInterval(this.speedUp);
+            roundInProgress = false;
+        }
     },
 
     checkForBallPickUp: function () {
@@ -363,7 +377,7 @@ DodgeballApp = {
     startGame: function () {
         roundInProgress = true;
         this.game = window.setInterval(this.playGame.bind(DodgeballApp), 30);
-        this.speedUp = window.setInterval(this.speedUpBalls.bind(DodgeballApp), 10000);
+        this.speedUp = window.setInterval(this.speedUpBalls.bind(DodgeballApp), 6000);
     },
 
 
