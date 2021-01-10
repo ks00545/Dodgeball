@@ -54,7 +54,7 @@ body {
 }
 
 
-.player {
+.player{
     height: 40px;
     width: 40px;
     background-color: blue;
@@ -65,7 +65,7 @@ body {
     left: 0px;
 }
 
-.ball {
+.ball{
     height: 40px;
     width: 40px;
     background-color: black;
@@ -76,7 +76,7 @@ body {
     left: 0px;
 }
 
-#Winner {
+#Message{
     font-size: 100;
     text-align: center;
     color: Black;
