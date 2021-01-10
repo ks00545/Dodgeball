@@ -10,7 +10,9 @@ No installation is required except for a web browser.
 ----------------------------------
 # Usage:
 
-Details coming later.
+Blue is controlled using the WASD keys and throws using Caps Lock. Red is controlled using the 4 arrow keys and throws with the Enter Key. 
+Pick up a stationary ball on your wall by hovering over it. Throw at your opponent. Throws will have a little randomness. You get a point when your opponent is hit. 
+The balls start out slow and progressively get faster. Space starts a new round after someone wins.
 ----------------------------------
 # Credits:
 
