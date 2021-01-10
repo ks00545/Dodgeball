@@ -12,6 +12,7 @@ DodgeballApp = {
     hitSound: undefined,
     redPoints: 0,
     bluePoints: 0,
+    roundInProgress: false,
 
     init: function () {
 
@@ -46,8 +47,6 @@ DodgeballApp = {
         this.container.append(player1div)
         player1 = {
             color: "blue",
-            haveBall: false,
-            lives: 3,
             width: 40,
             height: 40,
             element: player1div,
@@ -59,8 +58,6 @@ DodgeballApp = {
         this.container.append(player2div)
         player2 = {
             color: "red",
-            haveBall: false,
-            lives: 3,
             width: 40,
             height: 40,
             element: player2div,
@@ -75,15 +72,30 @@ DodgeballApp = {
         for (let i = 0; i < 4; i++) {
             this.balls.push(this.createBall());
         }
-        this.balls[1].y_pos = 470;
+        this.initializeBalls();
+    },
 
-        //right side balls
-        this.balls[2].x_pos = 970;
-        this.balls[3].y_pos = 470;
-        this.balls[3].x_pos = 970;
+    initializeBalls: function () {
+        this.balls[0].x_pos = 0;
+        this.balls[0].y_pos = 0;
+        this.balls[1].x_pos = 0;
+        this.balls[1].y_pos = 460;
+        this.balls[2].x_pos = 960;
+        this.balls[2].y_pos = 0;
+        this.balls[3].y_pos = 460;
+        this.balls[3].x_pos = 960;
+        for (i = 0; i < 4; i++) {
+            this.balls[i].moving = false;
+            this.balls[i].pickedUpBy = 0;
+        }
+        this.ballSpeed = 5;
+    },
 
-        this.balls[2].x_velocity = this.balls[2].x_velocity * -1;
-        this.balls[3].x_velocity = this.balls[3].x_velocity * -1;
+    initializePlayers: function () {
+        player1.x_pos = 40;
+        player1.y_pos = 230;
+        player2.x_pos = 920;
+        player2.y_pos = 230;
     },
 
     createBall: function () {
@@ -148,7 +160,9 @@ DodgeballApp = {
                 break;
             case 32: //Space
                 console.log("Space Down");
-                this.resetRound();
+                if (roundInProgress == false) {
+                    this.resetRound();
+                }
                 break;
             default:
                 console.log("Not a valid key");
@@ -260,15 +274,15 @@ DodgeballApp = {
     checkForHit: function () {
         for (i = 0; i < 4; i++) {
             if (this.balls[i].moving == true) {
-                ballCenterX = this.balls[i].x_pos + this.balls[i].width/2;
-                ballCenterY = this.balls[i].y_pos + this.balls[i].width/2;
-                Player1CenterX = player1.x_pos + player1.width/2;
-                Player1CenterY = player1.y_pos + player1.height/2;
-                Player2CenterX = player2.x_pos + player2.width/2;
-                Player2CenterY = player2.y_pos + player2.height/2;
+                ballCenterX = this.balls[i].x_pos + this.balls[i].width / 2;
+                ballCenterY = this.balls[i].y_pos + this.balls[i].width / 2;
+                Player1CenterX = player1.x_pos + player1.width / 2;
+                Player1CenterY = player1.y_pos + player1.height / 2;
+                Player2CenterX = player2.x_pos + player2.width / 2;
+                Player2CenterY = player2.y_pos + player2.height / 2;
                 distanceSquaredFromP1 = Math.pow(Player1CenterX - ballCenterX, 2) + Math.pow(Player1CenterY - ballCenterY, 2);
                 distanceSquaredFromP2 = Math.pow(Player2CenterX - ballCenterX, 2) + Math.pow(Player2CenterY - ballCenterY, 2);
-                if (distanceSquaredFromP1 < Math.pow(this.balls[i].width/2 + player1.width/2, 2)) {
+                if (distanceSquaredFromP1 < Math.pow(this.balls[i].width / 2 + player1.width / 2, 2)) {
                     console.log("Player 1 Hit!");
                     hitSound.play();
                     window.clearInterval(this.game);
@@ -279,8 +293,9 @@ DodgeballApp = {
                     this.redPoints = this.redPoints + 1;
                     let redPointsText = document.getElementById("redPoints");
                     redPointsText.textContent = "Red: " + this.redPoints;
+                    roundInProgress = false;
                 }
-                if (distanceSquaredFromP2 < Math.pow(this.balls[i].width/2 + player2.width/2, 2)) {
+                if (distanceSquaredFromP2 < Math.pow(this.balls[i].width / 2 + player2.width / 2, 2)) {
                     hitSound.play();
                     console.log("Player 2 Hit!");
                     window.clearInterval(this.game);
@@ -291,6 +306,7 @@ DodgeballApp = {
                     this.bluePoints = this.bluePoints + 1;
                     let bluePointsText = document.getElementById("bluePoints");
                     bluePointsText.textContent = "Blue: " + this.bluePoints;
+                    roundInProgress = false;
                 }
             }
         }
@@ -336,10 +352,16 @@ DodgeballApp = {
     },
 
     resetRound: function () {
-
+        this.initializeBalls();
+        this.initializePlayers();
+        let winText = document.getElementById("Winner");
+        winText.textContent = "";
+        this.renderGame();
+        this.startGame();
     },
 
     startGame: function () {
+        roundInProgress = true;
         this.game = window.setInterval(this.playGame.bind(DodgeballApp), 30);
         this.speedUp = window.setInterval(this.speedUpBalls.bind(DodgeballApp), 10000);
     },
