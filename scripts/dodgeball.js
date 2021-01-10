@@ -94,7 +94,7 @@ DodgeballApp = {
             element: balldiv,
             moving: false,
             pickedUpBy: 0,
-            radius: 30,
+            width: 40,
             color: "black",
             x_velocity: this.ballSpeed,
             y_velocity: this.ballSpeed,
@@ -238,10 +238,10 @@ DodgeballApp = {
                 this.balls[i].x_pos = 0;
                 this.balls[i].moving = false;
             }
-            if (this.balls[i].x_pos > 1000 - this.balls[i].radius) {
+            if (this.balls[i].x_pos > 1000 - this.balls[i].width) {
                 this.balls[i].x_velocity = 0;
                 this.balls[i].y_velocity = 0;
-                this.balls[i].x_pos = 1000 - this.balls[i].radius;
+                this.balls[i].x_pos = 1000 - this.balls[i].width;
                 this.balls[i].moving = false;
             }
             if (this.balls[i].y_pos < 0) {
@@ -249,9 +249,9 @@ DodgeballApp = {
                 this.balls[i].y_pos = 0;
                 bounceSound.play();
             }
-            if (this.balls[i].y_pos > 500 - this.balls[i].radius) {
+            if (this.balls[i].y_pos > 500 - this.balls[i].width) {
                 this.balls[i].y_velocity = this.balls[i].y_velocity * -1;
-                this.balls[i].y_pos = 500 - this.balls[i].radius;
+                this.balls[i].y_pos = 500 - this.balls[i].width;
                 bounceSound.play();
             }
         }
@@ -260,15 +260,15 @@ DodgeballApp = {
     checkForHit: function () {
         for (i = 0; i < 4; i++) {
             if (this.balls[i].moving == true) {
-                ballCenterX = this.balls[i].x_pos + 15;
-                ballCenterY = this.balls[i].y_pos + 15;
-                Player1CenterX = player1.x_pos + 20;
-                Player1CenterY = player1.y_pos + 20;
-                Player2CenterX = player2.x_pos + 20;
-                Player2CenterY = player2.y_pos + 20;
+                ballCenterX = this.balls[i].x_pos + this.balls[i].width/2;
+                ballCenterY = this.balls[i].y_pos + this.balls[i].width/2;
+                Player1CenterX = player1.x_pos + player1.width/2;
+                Player1CenterY = player1.y_pos + player1.height/2;
+                Player2CenterX = player2.x_pos + player2.width/2;
+                Player2CenterY = player2.y_pos + player2.height/2;
                 distanceSquaredFromP1 = Math.pow(Player1CenterX - ballCenterX, 2) + Math.pow(Player1CenterY - ballCenterY, 2);
                 distanceSquaredFromP2 = Math.pow(Player2CenterX - ballCenterX, 2) + Math.pow(Player2CenterY - ballCenterY, 2);
-                if (distanceSquaredFromP1 < Math.pow(35, 2)) {
+                if (distanceSquaredFromP1 < Math.pow(this.balls[i].width/2 + player1.width/2, 2)) {
                     console.log("Player 1 Hit!");
                     hitSound.play();
                     window.clearInterval(this.game);
@@ -280,7 +280,7 @@ DodgeballApp = {
                     let redPointsText = document.getElementById("redPoints");
                     redPointsText.textContent = "Red: " + this.redPoints;
                 }
-                if (distanceSquaredFromP2 < Math.pow(35, 2)) {
+                if (distanceSquaredFromP2 < Math.pow(this.balls[i].width/2 + player2.width/2, 2)) {
                     hitSound.play();
                     console.log("Player 2 Hit!");
                     window.clearInterval(this.game);
@@ -303,8 +303,8 @@ DodgeballApp = {
                 if (Math.abs(player1.x_pos - this.balls[i].x_pos) <= 10 && Math.abs(player1.y_pos - this.balls[i].y_pos) <= 10) {
                     this.balls[i].pickedUpBy = 1;
                 }
-                if (Math.abs(player2.x_pos - this.balls[i].x_pos) <= 10 + player2.height - this.balls[i].radius
-                    && Math.abs(player2.y_pos - this.balls[i].y_pos) <= 10 + player2.height - this.balls[i].radius) {
+                if (Math.abs(player2.x_pos - this.balls[i].x_pos) <= 10 + player2.height - this.balls[i].width
+                    && Math.abs(player2.y_pos - this.balls[i].y_pos) <= 10 + player2.height - this.balls[i].width) {
                     this.balls[i].pickedUpBy = 2;
                 }
             }
@@ -336,8 +336,8 @@ DodgeballApp = {
     },
 
     resetRound: function () {
-        
-    }
+
+    },
 
     startGame: function () {
         this.game = window.setInterval(this.playGame.bind(DodgeballApp), 30);
