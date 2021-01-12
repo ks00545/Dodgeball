@@ -120,7 +120,9 @@ DodgeballApp = {
 
     createSounds: function () {
         bounceSound = new Audio('audio/ballBounceSound.mp3');
+        //^Recorded by: Popup Pixels; https://soundbible.com/1626-Ball-Bounce.html
         hitSound = new Audio('audio/hitSound.mp3');
+        //^Recorded by: SoundMaster13; https://soundbible.com/1948-Slap.html
     },
 
     keyDown: function (event) {
