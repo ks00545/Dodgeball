@@ -43,6 +43,21 @@ body {
     margin-right:200px
 }
 
+#name{
+    font-size: 50;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-decoration: underline;
+}
+
+scoreText{
+    font-size: 30;
+    color: black;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
 #bluePoints{
     color: blue;
     font-weight: bold;
@@ -88,5 +103,4 @@ body {
     font-size: 22;
     width: 1200px;
     margin: 0 auto;
-
 }

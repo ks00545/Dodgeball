@@ -7,7 +7,7 @@ DodgeballApp = {
     player2: undefined,
     keyPressed: [],
     playerSpeed: 5, // speed in pixels
-    ballSpeed: 5,
+    ballSpeed: 8,
     bounceSound: undefined,
     hitSound: undefined,
     redPoints: 0,
