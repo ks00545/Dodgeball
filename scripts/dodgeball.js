@@ -18,7 +18,7 @@ DodgeballApp = {
     init: function () {
 
         this.playerSpeed = 5;
-        this.ballSpeed = 5;
+        this.ballSpeed = 8;
         this.redPoints = 0;
         this.bluePoints = 0;
 
@@ -126,7 +126,12 @@ DodgeballApp = {
         hitSound = new Audio('audio/hitSound.mp3');
         //^Recorded by: SoundMaster13; https://soundbible.com/1948-Slap.html
     },
+<<<<<<< HEAD
     //
+=======
+
+    
+>>>>>>> c28cb5b4982ab54380f08a224ea6dffd9a057ac0
     keyDown: function (event) {
         this.keyPressed[event.keyCode] = true;
 
