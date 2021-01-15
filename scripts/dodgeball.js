@@ -1,4 +1,5 @@
 DodgeballApp = {
+    //Kia
     container: document.getElementById("court"),
     game: undefined, // game timer
     speedUp: undefined, // for ball speed up timer
@@ -13,7 +14,7 @@ DodgeballApp = {
     redPoints: 0,
     bluePoints: 0,
     roundInProgress: false,
-
+    //Kia
     init: function () {
 
         this.playerSpeed = 5;
@@ -43,6 +44,7 @@ DodgeballApp = {
         winText.style.color = "black";
 
     },
+    //Kia
     createPlayers: function () {
         let player1div = document.createElement("div")
         player1div.className = "player"
@@ -69,7 +71,7 @@ DodgeballApp = {
 
 
     },
-
+    //Kia
     createBalls: function () {
         for (let i = 0; i < 4; i++) {
             this.balls.push(this.createBall());
@@ -92,14 +94,14 @@ DodgeballApp = {
         }
         this.ballSpeed = 5;
     },
-
+    //Kia
     initializePlayers: function () {
         player1.x_pos = 40;
         player1.y_pos = 230;
         player2.x_pos = 920;
-        player2.y_pos = 230;
+        player2.y_pos = 230;    
     },
-
+    //Kia
     createBall: function () {
         let balldiv = document.createElement("div")
         balldiv.className = "ball"
@@ -117,14 +119,14 @@ DodgeballApp = {
         }
         return ball;
     },
-
+    //Kia
     createSounds: function () {
         bounceSound = new Audio('audio/ballBounceSound.mp3');
         //^Recorded by: Popup Pixels; https://soundbible.com/1626-Ball-Bounce.html
         hitSound = new Audio('audio/hitSound.mp3');
         //^Recorded by: SoundMaster13; https://soundbible.com/1948-Slap.html
     },
-
+    //
     keyDown: function (event) {
         this.keyPressed[event.keyCode] = true;
 
@@ -174,11 +176,10 @@ DodgeballApp = {
                 console.log("Not a valid key");
         }
     },
-
     keyUp: function (event) {
         this.keyPressed[event.keyCode] = false;
     },
-
+    //
     movePlayers: function (event) {
         // Move Player 1
         if (this.keyPressed[87] == true) {   // If W, go up
@@ -232,7 +233,7 @@ DodgeballApp = {
             }
         }
     },
-
+    //Kia
     moveBall: function () {
         for (i = 0; i < 4; i++) {
             if (this.balls[i].moving == true) {
@@ -249,7 +250,7 @@ DodgeballApp = {
             }
         }
     },
-
+    //
     bounceBall: function () {
         for (i = 0; i < 4; i++) {
             if (this.balls[i].x_pos < 0) {
@@ -276,7 +277,7 @@ DodgeballApp = {
             }
         }
     },
-
+    //
     checkForHit: function () {
         let redWasHit = false;
         let blueWasHit = false;
@@ -332,7 +333,7 @@ DodgeballApp = {
             this.roundInProgress = false;
         }
     },
-
+    //Kia
     checkForBallPickUp: function () {
         for (i = 0; i < 4; i++) {
             if (this.balls[i].moving == false && this.balls[i].pickedUpBy == 0) {
@@ -346,7 +347,7 @@ DodgeballApp = {
             }
         }
     },
-
+    //Kia
     ballThrow1: function () {
         for (i = 0; i < 4; i++) {
             if (this.balls[i].pickedUpBy == 1) {
@@ -358,7 +359,7 @@ DodgeballApp = {
             }
         }
     },
-
+    //Kia
     ballThrow2: function () {
         for (i = 0; i < 4; i++) {
             if (this.balls[i].pickedUpBy == 2) {
@@ -370,14 +371,13 @@ DodgeballApp = {
             }
         }
     },
-
     resetRound: function () {
         this.initializeBalls();
         this.initializePlayers();
         this.renderGame();
         this.startGame();
     },
-
+    //
     startGame: function () {
         this.roundInProgress = true;
         this.game = window.setInterval(this.playGame.bind(DodgeballApp), 30);
@@ -394,7 +394,7 @@ DodgeballApp = {
         this.checkForHit();
         this.checkForBallPickUp();
     },
-
+    //
     speedUpBalls: function () {
         if (this.ballSpeed < 20) {
             this.ballSpeed = this.ballSpeed + 1;
@@ -405,7 +405,7 @@ DodgeballApp = {
         this.renderPlayers();
         this.renderBalls();
     },
-
+    //
     renderPlayers: function () {
         player1.element.style.top = player1.y_pos + "px";
         player1.element.style.left = player1.x_pos + "px";
@@ -415,7 +415,7 @@ DodgeballApp = {
         player2.element.style.left = player2.x_pos + "px";
         player2.element.style.backgroundColor = player2.color;
     },
-
+    //
     renderBalls: function () {
         for (let i = 0; i < 4; i++) {
             this.balls[i].element.style.top = this.balls[i].y_pos + "px";
