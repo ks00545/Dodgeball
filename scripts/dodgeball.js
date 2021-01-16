@@ -72,12 +72,30 @@ DodgeballApp = {
 
 
     },
-    //Kia
+    //Kailash and Kia
     createBalls: function () {
         for (let i = 0; i < 4; i++) {
             this.balls.push(this.createBall());
         }
         this.initializeBalls();
+    },
+    //Kailash and Kia
+    createBall: function () {
+        let balldiv = document.createElement("div")
+        balldiv.className = "ball"
+        this.container.append(balldiv)
+        let ball = {
+            element: balldiv,
+            moving: false,
+            pickedUpBy: 0,
+            width: 40,
+            color: "black",
+            x_velocity: this.ballSpeed,
+            y_velocity: this.ballSpeed,
+            x_pos: 0,
+            y_pos: 0,
+        }
+        return ball;
     },
     //Kailash
     initializeBalls: function () {
@@ -102,24 +120,6 @@ DodgeballApp = {
         player2.x_pos = 920;
         player2.y_pos = 230;
     },
-    //Kia
-    createBall: function () {
-        let balldiv = document.createElement("div")
-        balldiv.className = "ball"
-        this.container.append(balldiv)
-        let ball = {
-            element: balldiv,
-            moving: false,
-            pickedUpBy: 0,
-            width: 40,
-            color: "black",
-            x_velocity: this.ballSpeed,
-            y_velocity: this.ballSpeed,
-            x_pos: 0,
-            y_pos: 0,
-        }
-        return ball;
-    },
     //Kailash
     createSounds: function () {
         bounceSound = new Audio('audio/ballBounceSound.mp3');
@@ -131,8 +131,15 @@ DodgeballApp = {
     keyDown: function (event) {
         this.keyPressed[event.keyCode] = true;
 
-        // initial attempt to handle keys
         switch (event.keyCode) {
+            case 20:    // Caps Lock
+                console.log("Caps Lock down");
+                this.ballThrow(1, player1);
+                break;
+            case 13:    // Enter
+                console.log("Enter down");
+                this.ballThrow(2, player2);
+                break;
             case 87:    // W
                 console.log("W down");
                 break;
@@ -157,14 +164,6 @@ DodgeballApp = {
             case 40:    // Down arrow
                 console.log("Down down");
                 break;
-            case 20:    // Caps Lock
-                console.log("Caps Lock down");
-                this.ballThrow1();
-                break;
-            case 13:    // Enter
-                console.log("Enter down");
-                this.ballThrow2();
-                break;
             case 32: //Space
                 console.log("Space Down");
                 if (this.roundInProgress == false) {
@@ -182,7 +181,7 @@ DodgeballApp = {
         this.keyPressed[event.keyCode] = false;
     },
     //Kailash
-    movePlayers: function (event) {
+    movePlayers: function () {
         // Move Player 1
         if (this.keyPressed[87] == true) {   // If W, go up
             player1.y_pos = player1.y_pos - this.playerSpeed;
@@ -349,23 +348,17 @@ DodgeballApp = {
         }
     },
     //Kailash
-    ballThrow1: function () {
+    ballThrow: function (playerNumber, player) {
         for (i = 0; i < 4; i++) {
-            if (this.balls[i].pickedUpBy == 1) {
-                this.balls[i].x_pos = this.balls[i].x_pos + player1.width;
-                this.balls[i].x_velocity = this.ballSpeed;
-                this.balls[i].y_velocity = (Math.random() - 0.5) * this.ballSpeed;
-                this.balls[i].moving = true;
-                this.balls[i].pickedUpBy = 0;
-            }
-        }
-    },
-    //Kailash
-    ballThrow2: function () {
-        for (i = 0; i < 4; i++) {
-            if (this.balls[i].pickedUpBy == 2) {
-                this.balls[i].x_pos = this.balls[i].x_pos - player2.width;
-                this.balls[i].x_velocity = this.ballSpeed * -1;
+            if (this.balls[i].pickedUpBy == playerNumber) {
+                if (playerNumber == 1) {
+                    this.balls[i].x_pos = this.balls[i].x_pos + player.width;
+                    this.balls[i].x_velocity = this.ballSpeed;
+                }
+                if (playerNumber == 2) {
+                    this.balls[i].x_pos = this.balls[i].x_pos - player.width;
+                    this.balls[i].x_velocity = - this.ballSpeed;
+                }
                 this.balls[i].y_velocity = (Math.random() - 0.5) * this.ballSpeed;
                 this.balls[i].moving = true;
                 this.balls[i].pickedUpBy = 0;
