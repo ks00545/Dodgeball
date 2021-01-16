@@ -126,12 +126,7 @@ DodgeballApp = {
         hitSound = new Audio('audio/hitSound.mp3');
         //^Recorded by: SoundMaster13; https://soundbible.com/1948-Slap.html
     },
-<<<<<<< HEAD
     //
-=======
-
-    
->>>>>>> c28cb5b4982ab54380f08a224ea6dffd9a057ac0
     keyDown: function (event) {
         this.keyPressed[event.keyCode] = true;
 
@@ -284,8 +279,6 @@ DodgeballApp = {
     },
     //
     checkForHit: function () {
-        let redWasHit = false;
-        let blueWasHit = false;
         for (i = 0; i < 4; i++) {
             if (this.balls[i].moving == true) {
                 ballCenterX = this.balls[i].x_pos + this.balls[i].width / 2;
@@ -300,22 +293,19 @@ DodgeballApp = {
                     console.log("Player 1 Hit!");
                     hitSound.play();
                     blueWasHit = true;
-
+                    this.redWin();
                 }
                 if (distanceSquaredFromP2 < Math.pow(this.balls[i].width / 2 + player2.width / 2, 2)) {
                     console.log("Player 2 Hit!");
                     hitSound.play();
                     redWasHit = true;
-
+                    this.blueWin();
                 }
             }
         }
-        if (redWasHit == true && blueWasHit == true) {
-            let winText = document.getElementById("Message");
-            winText.textContent = "Tie!";
-            winText.style.color = "black";
-        }
-        else if (redWasHit == true) {
+    },
+    blueWin: function(){
+         if (redWasHit == true) {
             let winText = document.getElementById("Message");
             winText.textContent = "Blue Wins!";
             winText.style.color = "blue";
@@ -324,13 +314,32 @@ DodgeballApp = {
             bluePointsText.textContent = "Blue: " + this.bluePoints;
 
         }
-        else if (blueWasHit == true) {
+        if (redWasHit == true || blueWasHit == true) {
+            window.clearInterval(this.game);
+            window.clearInterval(this.speedUp);
+            this.roundInProgress = false;
+        }
+    },
+    redWin: function() {
+         if (blueWasHit == true) {
             let winText = document.getElementById("Message");
             winText.textContent = "Red Wins!";
             winText.style.color = "red";
             this.redPoints = this.redPoints + 1;
             let redPointsText = document.getElementById("redPoints");
             redPointsText.textContent = "Red: " + this.redPoints;
+        }
+        if (redWasHit == true || blueWasHit == true) {
+            window.clearInterval(this.game);
+            window.clearInterval(this.speedUp);
+            this.roundInProgress = false;
+        }
+    },
+    tieGame:function(){
+        if (redWasHit == true && blueWasHit == true) {
+            let winText = document.getElementById("Message");
+            winText.textContent = "Tie!";
+            winText.style.color = "black";
         }
         if (redWasHit == true || blueWasHit == true) {
             window.clearInterval(this.game);
