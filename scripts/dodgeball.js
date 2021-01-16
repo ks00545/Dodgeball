@@ -1,5 +1,5 @@
 DodgeballApp = {
-    //Kia
+    //Kailash and Kia
     container: document.getElementById("court"),
     game: undefined, // game timer
     speedUp: undefined, // for ball speed up timer
@@ -14,7 +14,8 @@ DodgeballApp = {
     redPoints: 0,
     bluePoints: 0,
     roundInProgress: false,
-    //Kia
+
+    //Kailash and Kia
     init: function () {
 
         this.playerSpeed = 5;
@@ -78,7 +79,7 @@ DodgeballApp = {
         }
         this.initializeBalls();
     },
-
+    //Kailash
     initializeBalls: function () {
         this.balls[0].x_pos = 0;
         this.balls[0].y_pos = 0;
@@ -94,12 +95,12 @@ DodgeballApp = {
         }
         this.ballSpeed = 5;
     },
-    //Kia
+    //Kailash and Kia
     initializePlayers: function () {
         player1.x_pos = 40;
         player1.y_pos = 230;
         player2.x_pos = 920;
-        player2.y_pos = 230;    
+        player2.y_pos = 230;
     },
     //Kia
     createBall: function () {
@@ -119,14 +120,14 @@ DodgeballApp = {
         }
         return ball;
     },
-    //Kia
+    //Kailash
     createSounds: function () {
         bounceSound = new Audio('audio/ballBounceSound.mp3');
         //^Recorded by: Popup Pixels; https://soundbible.com/1626-Ball-Bounce.html
         hitSound = new Audio('audio/hitSound.mp3');
         //^Recorded by: SoundMaster13; https://soundbible.com/1948-Slap.html
     },
-    //
+    //Kailash
     keyDown: function (event) {
         this.keyPressed[event.keyCode] = true;
 
@@ -176,10 +177,11 @@ DodgeballApp = {
                 console.log("Not a valid key");
         }
     },
+    //Kailash
     keyUp: function (event) {
         this.keyPressed[event.keyCode] = false;
     },
-    //
+    //Kailash
     movePlayers: function (event) {
         // Move Player 1
         if (this.keyPressed[87] == true) {   // If W, go up
@@ -206,7 +208,6 @@ DodgeballApp = {
                 player1.x_pos = 500 - player1.width;
             }
         }
-
         //Move Player 2
         if (this.keyPressed[38] == true) {   // If up arrow, go up
             player2.y_pos = player2.y_pos - this.playerSpeed;
@@ -233,7 +234,7 @@ DodgeballApp = {
             }
         }
     },
-    //Kia
+    //Kailash and Kia
     moveBall: function () {
         for (i = 0; i < 4; i++) {
             if (this.balls[i].moving == true) {
@@ -250,7 +251,7 @@ DodgeballApp = {
             }
         }
     },
-    //
+    //Kailash
     bounceBall: function () {
         for (i = 0; i < 4; i++) {
             if (this.balls[i].x_pos < 0) {
@@ -277,8 +278,10 @@ DodgeballApp = {
             }
         }
     },
-    //
+    //Kailash
     checkForHit: function () {
+        let redWasHit = false;
+        let blueWasHit = false;
         for (i = 0; i < 4; i++) {
             if (this.balls[i].moving == true) {
                 ballCenterX = this.balls[i].x_pos + this.balls[i].width / 2;
@@ -293,19 +296,22 @@ DodgeballApp = {
                     console.log("Player 1 Hit!");
                     hitSound.play();
                     blueWasHit = true;
-                    this.redWin();
+
                 }
                 if (distanceSquaredFromP2 < Math.pow(this.balls[i].width / 2 + player2.width / 2, 2)) {
                     console.log("Player 2 Hit!");
                     hitSound.play();
                     redWasHit = true;
-                    this.blueWin();
+
                 }
             }
         }
-    },
-    blueWin: function(){
-         if (redWasHit == true) {
+        if (redWasHit == true && blueWasHit == true) {
+            let winText = document.getElementById("Message");
+            winText.textContent = "Tie!";
+            winText.style.color = "black";
+        }
+        else if (redWasHit == true) {
             let winText = document.getElementById("Message");
             winText.textContent = "Blue Wins!";
             winText.style.color = "blue";
@@ -314,14 +320,7 @@ DodgeballApp = {
             bluePointsText.textContent = "Blue: " + this.bluePoints;
 
         }
-        if (redWasHit == true || blueWasHit == true) {
-            window.clearInterval(this.game);
-            window.clearInterval(this.speedUp);
-            this.roundInProgress = false;
-        }
-    },
-    redWin: function() {
-         if (blueWasHit == true) {
+        else if (blueWasHit == true) {
             let winText = document.getElementById("Message");
             winText.textContent = "Red Wins!";
             winText.style.color = "red";
@@ -335,19 +334,7 @@ DodgeballApp = {
             this.roundInProgress = false;
         }
     },
-    tieGame:function(){
-        if (redWasHit == true && blueWasHit == true) {
-            let winText = document.getElementById("Message");
-            winText.textContent = "Tie!";
-            winText.style.color = "black";
-        }
-        if (redWasHit == true || blueWasHit == true) {
-            window.clearInterval(this.game);
-            window.clearInterval(this.speedUp);
-            this.roundInProgress = false;
-        }
-    },
-    //Kia
+    //Kailash
     checkForBallPickUp: function () {
         for (i = 0; i < 4; i++) {
             if (this.balls[i].moving == false && this.balls[i].pickedUpBy == 0) {
@@ -361,7 +348,7 @@ DodgeballApp = {
             }
         }
     },
-    //Kia
+    //Kailash
     ballThrow1: function () {
         for (i = 0; i < 4; i++) {
             if (this.balls[i].pickedUpBy == 1) {
@@ -373,7 +360,7 @@ DodgeballApp = {
             }
         }
     },
-    //Kia
+    //Kailash
     ballThrow2: function () {
         for (i = 0; i < 4; i++) {
             if (this.balls[i].pickedUpBy == 2) {
@@ -385,21 +372,20 @@ DodgeballApp = {
             }
         }
     },
+    //Kailash
     resetRound: function () {
         this.initializeBalls();
         this.initializePlayers();
         this.renderGame();
         this.startGame();
     },
-    //
+    //Kailash
     startGame: function () {
         this.roundInProgress = true;
         this.game = window.setInterval(this.playGame.bind(DodgeballApp), 30);
         this.speedUp = window.setInterval(this.speedUpBalls.bind(DodgeballApp), 6000);
     },
-
-
-
+    //Kailash
     playGame: function () {
         this.movePlayers();
         this.moveBall();
@@ -408,18 +394,18 @@ DodgeballApp = {
         this.checkForHit();
         this.checkForBallPickUp();
     },
-    //
+    //Kailash
     speedUpBalls: function () {
         if (this.ballSpeed < 20) {
             this.ballSpeed = this.ballSpeed + 1;
         }
     },
-
+    //Kailash
     renderGame: function () {
         this.renderPlayers();
         this.renderBalls();
     },
-    //
+    //Kailash
     renderPlayers: function () {
         player1.element.style.top = player1.y_pos + "px";
         player1.element.style.left = player1.x_pos + "px";
@@ -429,7 +415,7 @@ DodgeballApp = {
         player2.element.style.left = player2.x_pos + "px";
         player2.element.style.backgroundColor = player2.color;
     },
-    //
+    //Kailash
     renderBalls: function () {
         for (let i = 0; i < 4; i++) {
             this.balls[i].element.style.top = this.balls[i].y_pos + "px";
